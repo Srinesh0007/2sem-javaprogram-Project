@@ -1,0 +1,111 @@
+import java.util.*;
+
+class Document {
+    String name;
+    String type;
+    String date;
+
+    Document(String name, String type, String date) {
+        this.name = name;
+        this.type = type;
+        this.date = date;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        ArrayList<Document> docs = new ArrayList<>();
+
+        int choice;
+
+        System.out.println("====== DIGITAL DOCUMENT RECORD MANAGEMENT SYSTEM ======");
+
+        while (true) {
+
+            System.out.println("\n1. Add Document");
+            System.out.println("2. View Documents");
+            System.out.println("3. Search Document");
+            System.out.println("4. Delete Document");
+            System.out.println("5. Exit");
+
+            System.out.print("\nEnter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            if (choice == 1) {
+                System.out.print("Enter Document Name: ");
+                String name = sc.nextLine();
+
+                System.out.print("Enter Document Type: ");
+                String type = sc.nextLine();
+
+                System.out.print("Enter Date: ");
+                String date = sc.nextLine();
+
+                docs.add(new Document(name, type, date));
+                System.out.println("Document Added Successfully!");
+
+            } 
+            else if (choice == 2) {
+                if (docs.isEmpty()) {
+                    System.out.println("No documents available.");
+                } else {
+                    System.out.println("\n--- Document Records ---");
+                    for (int i = 0; i < docs.size(); i++) {
+                        Document d = docs.get(i);
+                        System.out.println((i + 1) + ". " + d.name + " | " + d.type + " | " + d.date);
+                    }
+                }
+
+            } 
+            else if (choice == 3) {
+                System.out.print("Enter Document Name to Search: ");
+                String search = sc.nextLine();
+                boolean found = false;
+
+                for (Document d : docs) {
+                    if (d.name.equalsIgnoreCase(search)) {
+                        System.out.println("Found: " + d.name + " | " + d.type + " | " + d.date);
+                        found = true;
+                    }
+                }
+
+                if (!found) {
+                    System.out.println("Document not found.");
+                }
+
+            } 
+            else if (choice == 4) {
+                System.out.print("Enter Document Name to Delete: ");
+                String delete = sc.nextLine();
+                boolean removed = false;
+
+                Iterator<Document> it = docs.iterator();
+                while (it.hasNext()) {
+                    Document d = it.next();
+                    if (d.name.equalsIgnoreCase(delete)) {
+                        it.remove();
+                        removed = true;
+                        System.out.println("Document Deleted Successfully!");
+                    }
+                }
+
+                if (!removed) {
+                    System.out.println("Document not found.");
+                }
+
+            } 
+            else if (choice == 5) {
+                System.out.println("\nThank You!");
+                break;
+            } 
+            else {
+                System.out.println("Invalid choice! Try again.");
+            }
+        }
+
+        sc.close();
+    }
+}
